@@ -905,8 +905,8 @@ export default function Home() {
                     <div className="method-icon">✉️</div>
                     <div>
                       <h4>Email Inquiries</h4>
-                      <a href="mailto:contact@datanavigate.com" className="contact-link">contact@datanavigate.com</a><br />
-                      <a href="mailto:careers@datanavigate.com" className="contact-link">careers@datanavigate.com</a>
+                      <a href="mailto:contact@datanavigate.co.uk" className="contact-link">contact@datanavigate.co.uk</a><br />
+                      <a href="mailto:careers@datanavigate.co.uk" className="contact-link">careers@datanavigate.co.uk</a>
                     </div>
                   </div>
 
