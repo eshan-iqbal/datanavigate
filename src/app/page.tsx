@@ -46,22 +46,51 @@ const EXP_LIST = [
   { key: '4', label: '8+ Years', sub: 'Principal / Lead / Architect' },
 ];
 
-function LogoIcon({ size = 30 }: { size?: number }) {
+function LogoIcon({ size = 32 }: { size?: number }) {
+  const [imgError, setImgError] = useState(false);
+
+  if (!imgError) {
+    return (
+      <img
+        src="/logo.png"
+        alt="DataNavigate"
+        className="brand-logo-img"
+        style={{ height: `${size}px`, width: 'auto' }}
+        onError={() => setImgError(true)}
+      />
+    );
+  }
+
   return (
     <svg 
-      width={size} 
+      width={Math.round(size * 1.14)} 
       height={size} 
-      viewBox="0 0 28 28" 
+      viewBox="0 0 114 100" 
       fill="none" 
       xmlns="http://www.w3.org/2000/svg"
       className="brand-logo-svg"
       aria-hidden="true"
     >
-      <rect width="28" height="28" rx="7.5" fill="#191919" />
-      {/* Left rounded pill */}
-      <rect x="5.8" y="6.2" width="3.6" height="15.6" rx="1.8" fill="#FFFFFF" />
-      {/* Right rounded squircle */}
-      <rect x="11.2" y="6.2" width="11" height="15.6" rx="4.5" fill="#FFFFFF" />
+      {/* Pillar 1 (Leftmost Solid Block) */}
+      <rect x="6" y="8" width="18" height="84" rx="1.5" fill="currentColor" />
+
+      {/* Arch 2 (Outer Wave) */}
+      <path
+        d="M29 92 V48 C29 25.5 47 9 70 9 C75 9 79.5 10.2 83.5 12 V25.5 C80 24 75.5 23 70 23 C54.5 23 43 33.5 43 49.5 V92 H29 Z"
+        fill="currentColor"
+      />
+
+      {/* Arch 3 (Middle Wave) */}
+      <path
+        d="M48 92 V58 C48 41 60 29.5 76 29.5 C83.5 29.5 89.5 32 94.5 35.8 V49 C90 45.2 84 43 76.5 43 C67.5 43 62 49 62 60 V92 H48 Z"
+        fill="currentColor"
+      />
+
+      {/* Arch 4 (Inner Gateway / N Arch) */}
+      <path
+        d="M67 92 V63 C67 52 75.5 44 87.5 44 C99.5 44 108 52 108 63 V92 H94 V64 C94 59.5 90.5 56.5 86.5 56.5 C82.5 56.5 79 59.5 79 64 V92 H67 Z"
+        fill="currentColor"
+      />
     </svg>
   );
 }
@@ -339,12 +368,8 @@ export default function Home() {
       {/* Typeform Minimalist Floating Header */}
       <header className="site-header">
         <div className="nav-container">
-          <div className="brand-logo" onClick={() => handleNavClick('home')} role="button" tabIndex={0}>
-            <LogoIcon size={30} />
-            <div>
-              <span className="brand-name">DataNavigate</span>
-              <span className="brand-sub">LIMITED</span>
-            </div>
+          <div className="brand-logo" onClick={() => handleNavClick('home')} role="button" tabIndex={0} aria-label="DataNavigate Home">
+            <LogoIcon size={40} />
           </div>
 
           <nav className={`nav-pill-container ${mobileNavOpen ? 'mobile-open' : ''}`} aria-label="Main Navigation">
@@ -1405,12 +1430,8 @@ export default function Home() {
       <footer className="site-footer">
         <div className="footer-container">
           <div className="footer-brand">
-            <div className="brand-logo" onClick={() => handleNavClick('home')} role="button" tabIndex={0}>
-              <LogoIcon size={30} />
-              <div>
-                <span className="brand-name">DataNavigate</span>
-                <span className="brand-sub">LIMITED</span>
-              </div>
+            <div className="brand-logo" onClick={() => handleNavClick('home')} role="button" tabIndex={0} aria-label="DataNavigate Home">
+              <LogoIcon size={38} />
             </div>
             <p className="footer-tagline">
               Developer-led ServiceNow & elite enterprise IT talent navigation worldwide.
