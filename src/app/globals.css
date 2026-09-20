@@ -2468,6 +2468,9 @@ input:focus, select:focus, textarea:focus {
   .hero-title { font-size: 3.4rem; }
   .portal-main-heading { font-size: 2.8rem; }
   .hero-section { padding-top: 60px; padding-bottom: 36px; }
+  .nav-container { padding: 12px 20px; gap: 14px; }
+  .nav-link-btn { padding: 6px 14px; font-size: 0.85rem; }
+  .brand-logo-img { height: 36px; max-width: 160px; }
   .candidate-split-layout { grid-template-columns: 1fr; gap: 28px; }
   .dossier-preview-pane { position: static; margin-top: 20px; }
   .features-grid, .testimonials-grid { grid-template-columns: repeat(1, 1fr); gap: 20px; }
@@ -2488,14 +2491,22 @@ input:focus, select:focus, textarea:focus {
   }
 
   .nav-container { 
-    padding: 14px 18px; 
+    display: flex !important;
+    padding: 10px 16px; 
     position: relative;
     justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .brand-logo-img {
+    height: 32px;
+    max-width: 140px;
   }
   
   .nav-pill-container {
     position: fixed;
-    top: 68px;
+    top: 64px;
     left: 12px;
     right: 12px;
     background: #FFFFFF;
