@@ -46,7 +46,7 @@ const EXP_LIST = [
   { key: '4', label: '8+ Years', sub: 'Principal / Lead / Architect' },
 ];
 
-function LogoIcon({ size = 32 }: { size?: number }) {
+function LogoIcon({ size = 48 }: { size?: number }) {
   const [imgError, setImgError] = useState(false);
 
   if (!imgError) {
@@ -369,7 +369,7 @@ export default function Home() {
       <header className="site-header">
         <div className="nav-container">
           <div className="brand-logo" onClick={() => handleNavClick('home')} role="button" tabIndex={0} aria-label="DataNavigate Home">
-            <LogoIcon size={40} />
+            <LogoIcon size={54} />
           </div>
 
           <nav className={`nav-pill-container ${mobileNavOpen ? 'mobile-open' : ''}`} aria-label="Main Navigation">
@@ -1257,6 +1257,14 @@ export default function Home() {
                           <span className="field-q-num">3.1</span> Upload CV Document (PDF, DOC, DOCX up to 10MB) *
                         </label>
                         
+                        <input 
+                          type="file" 
+                          id="cvFileInput" 
+                          accept=".pdf,.doc,.docx" 
+                          className="file-input-hidden" 
+                          onChange={handleFileChange} 
+                        />
+
                         <div 
                           className={`dropzone-container modern ${isDragging ? 'drag-over' : ''} ${selectedFile ? 'has-file' : ''}`}
                           onDragOver={handleDragOver}
@@ -1266,35 +1274,67 @@ export default function Home() {
                           role="button"
                           tabIndex={0}
                         >
-                          <input 
-                            type="file" 
-                            id="cvFileInput" 
-                            accept=".pdf,.doc,.docx" 
-                            className="file-input-hidden" 
-                            onChange={handleFileChange} 
-                          />
-                          
                           {!selectedFile ? (
                             <div className="dropzone-content">
-                              <div className="dropzone-icon-badge">📄</div>
-                              <h4>Drag & drop your CV here, or <span className="browse-highlight">Browse Files</span></h4>
-                              <p>Supports PDF, DOC, DOCX (Max 10MB)</p>
+                              <div className="dropzone-icon-circle">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                  <polyline points="17 8 12 3 7 8" />
+                                  <line x1="12" y1="3" x2="12" y2="15" />
+                                </svg>
+                              </div>
+                              <div className="dropzone-text-block">
+                                <h4 className="dropzone-headline">
+                                  Drag &amp; drop your CV here, or <span className="browse-pill-btn">Browse Files</span>
+                                </h4>
+                                <div className="dropzone-format-tags">
+                                  <span className="format-tag">PDF</span>
+                                  <span className="format-tag">DOC</span>
+                                  <span className="format-tag">DOCX</span>
+                                  <span className="format-tag-limit">Max 10MB</span>
+                                </div>
+                              </div>
                             </div>
                           ) : (
-                            <div className="selected-file-preview-card">
-                              <div className="file-avatar-icon">✓</div>
-                              <div className="file-meta-info">
-                                <span className="file-title-name">{selectedFile.name}</span>
-                                <span className="file-size-badge">{(selectedFile.size / (1024 * 1024)).toFixed(2)} MB • Ready for Screening</span>
+                            <div className="selected-file-preview-card" onClick={(e) => e.stopPropagation()}>
+                              <div className="file-icon-box">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                  <polyline points="14 2 14 8 20 8" />
+                                  <line x1="16" y1="13" x2="8" y2="13" />
+                                  <line x1="16" y1="17" x2="8" y2="17" />
+                                  <polyline points="10 9 9 9 8 9" />
+                                </svg>
                               </div>
-                              <button 
-                                type="button" 
-                                className="file-delete-btn" 
-                                onClick={handleRemoveFile}
-                                title="Remove file"
-                              >
-                                Remove ✕
-                              </button>
+                              <div className="file-meta-info">
+                                <span className="file-title-name" title={selectedFile.name}>{selectedFile.name}</span>
+                                <div className="file-status-row">
+                                  <span className="file-size-badge">{(selectedFile.size / (1024 * 1024)).toFixed(2)} MB</span>
+                                  <span className="file-ready-tag">
+                                    <span className="ready-bullet">✓</span> Ready for Screening
+                                  </span>
+                                </div>
+                              </div>
+                              <div className="file-actions-cluster">
+                                <button 
+                                  type="button" 
+                                  className="file-replace-btn"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    document.getElementById('cvFileInput')?.click();
+                                  }}
+                                >
+                                  Replace
+                                </button>
+                                <button 
+                                  type="button" 
+                                  className="file-delete-btn" 
+                                  onClick={handleRemoveFile}
+                                  title="Remove file"
+                                >
+                                  ✕
+                                </button>
+                              </div>
                             </div>
                           )}
                         </div>
@@ -1304,13 +1344,22 @@ export default function Home() {
                         <label htmlFor="c_linkedin">
                           <span className="field-q-num">3.2</span> LinkedIn or GitHub Profile (Optional)
                         </label>
-                        <input 
-                          type="url" 
-                          id="c_linkedin" 
-                          placeholder="https://linkedin.com/in/yourprofile"
-                          value={candidateData.linkedin}
-                          onChange={(e) => setCandidateData({ ...candidateData, linkedin: e.target.value })}
-                        />
+                        <div className="input-with-icon">
+                          <span className="input-leading-icon" aria-hidden="true">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                            </svg>
+                          </span>
+                          <input 
+                            type="url" 
+                            id="c_linkedin" 
+                            className="input-pl-icon"
+                            placeholder="https://linkedin.com/in/yourprofile"
+                            value={candidateData.linkedin}
+                            onChange={(e) => setCandidateData({ ...candidateData, linkedin: e.target.value })}
+                          />
+                        </div>
                       </div>
 
                       <div className="typeform-field-group">
@@ -1431,7 +1480,7 @@ export default function Home() {
         <div className="footer-container">
           <div className="footer-brand">
             <div className="brand-logo" onClick={() => handleNavClick('home')} role="button" tabIndex={0} aria-label="DataNavigate Home">
-              <LogoIcon size={38} />
+              <LogoIcon size={68} />
             </div>
             <p className="footer-tagline">
               Developer-led ServiceNow & elite enterprise IT talent navigation worldwide.
